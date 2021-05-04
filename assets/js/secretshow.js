@@ -8,7 +8,7 @@ var closeBtn = document.querySelector('.modal-close');
 $('#rock').click(function () {
     console.log(modal);
     modal.classList.add('is-active');
-    $('#modalGenre').text('Rock Artist Here');
+    $('#modalGenre').text('Spirit Machines ');
     var url = 'assets/images/spirit-machine-rock.JPG'
     $('.modalcontent').ready(function () {
         var image = new Image();
@@ -20,8 +20,8 @@ $('#rock').click(function () {
 
 $('#folk').click(function () {
     modal.classList.add('is-active');
-    $('#modalGenre').text('Folk Artist Here');
-    var url = 'assets/images/pixie%thepartygrassboys-folk.JPG'
+    $('#modalGenre').text('Pixie and The Partygrass Boys');
+    var url = 'assets/images/pixieandthepartygrass.JPG'
     $('.modalcontent').ready(function () {
         var image = new Image();
         image.src = url;
@@ -31,7 +31,7 @@ $('#folk').click(function () {
 
 $('#indie').click(function () {
     modal.classList.add('is-active');
-    $('#modalGenre').text('Indie Artist Here');
+    $('#modalGenre').text('First Daze');
     var url = 'assets/images/first-daze-indie.JPG'
     $('.modalcontent').ready(function () {
         var image = new Image();
@@ -42,11 +42,11 @@ $('#indie').click(function () {
 
 $('#dance').click(function () {
     modal.classList.add('is-active');
-    $('#modalGenre').text('Dance Artist Here');
+    $('#modalGenre').text('Moodlite');
     var url = 'assets/images/moodlite-electronic.JPG'
     $('.modalcontent').ready(function () {
         var image = new Image();
-        image.src = url;
+      image.src = url;
         $('#modal-img').append(image);
     })
 });
@@ -77,10 +77,10 @@ var folkCount = 0;
 var indieCount = 0;
 var danceCount = 0;
 //--------------Storing the times each artist 'like' button was clicked
-var timesLikedRock = 0;
-var timesLikedFolk = 0;
-var timesLikedIndie = 0;
-var timesLikedDance = 0;
+var timesLikedRock = localStorage.getItem('rock-likes') || 0;
+var timesLikedFolk = localStorage.getItem('folk-likes') || 0;
+var timesLikedIndie = localStorage.getItem('indie-likes') || 0;
+var timesLikedDance = localStorage.getItem('dance-likes') || 0;
 
 var rockEl = document.querySelector('#rock');
 var folkEl = document.querySelector('#folk');
@@ -117,24 +117,24 @@ $('#rock').click(function clearDOM() {
     $('#load-page').empty();
     $('#modalBtn').click(function () {
         modal.classList.remove('is-active')
-
-    });
-
-
-
-    //--------like button after modal button click
-    $('#like-rock-container').removeAttr('style');
-    $('#like-rock').click(function likeClick() {
-        $('#like-rock').attr('src', 'assets/images/like btn after.png');
-        timesLikedRock++;
-        localStorage.setItem('likes', timesLikedRock);
-        console.log('likes' + timesLikedRock);
-        var likeDisplayRock = localStorage.getItem('likes', timesLikedRock);
-        $('#like-rock-counter').text('You have like this band ' + likeDisplayRock + ' times');
+        
+        //--------like button after modal button click
+        $('#like-rock-container').removeAttr('style');
+        $('#like-rock').click(function likeClick() {
+            $('#like-rock').attr('src', 'assets/images/like btn after.png');
+            timesLikedRock++;
+            localStorage.setItem('rock-likes', timesLikedRock);
+            console.log('likes' + timesLikedRock);
+            var likeDisplayRock = localStorage.getItem('rock-likes');
+            $('#like-rock-counter').text('You have liked this band ' + likeDisplayRock + ' times');
+            // --------------update the Dom with Youtube after modal button 
+        })
+        var likeDisplayRock = localStorage.getItem('rock-likes', timesLikedRock);
+        $('#like-rock-counter').text('You have liked this band ' + likeDisplayRock + ' times').attr('style', 'color: white');
+        
+        pullYoutube('RsdUSY9r898');
+        pullMapbox();
     })
-    // --------------update the Dom with Youtube after modal button 
-    pullYoutube('RsdUSY9r898');
-    pullMapbox();
 });
 
 
@@ -148,12 +148,13 @@ $('#folk').click(function clearDOM() {
         $('#like-folk').click(function likeClick() {
             $('#like-folk').attr('src', 'assets/images/like btn after.png');
             timesLikedFolk++;
-            localStorage.setItem('likes', timesLikedFolk);
+            localStorage.setItem('folk-likes', timesLikedFolk);
             console.log('likes' + timesLikedFolk);
-            var likeDisplayFolk = localStorage.getItem('likes', timesLikedFolk);
-            $('#like-folk-counter').text('You have like this band ' + likeDisplayFolk + ' times');
-
+            var likeDisplayFolk = localStorage.getItem('folk-likes', timesLikedFolk);
+            $('#like-folk-counter').text('You have liked this band ' + likeDisplayFolk + ' times');
         })
+        var likeDisplayFolk = localStorage.getItem('folk-likes', timesLikedFolk);
+        $('#like-folk-counter').text('You have liked this band ' + likeDisplayFolk + ' times').attr('style', 'color: white');
         // --------------update the Dom with Youtube after modal button 
         pullYoutube('mzRGq143Xws');
         pullMapbox();
@@ -172,11 +173,13 @@ $('#indie').click(function clearDOM() {
         $('#like-indie').click(function likeClick() {
             $('#like-indie').attr('src', 'assets/images/like btn after.png');
             timesLikedIndie++;
-            localStorage.setItem('likes', timesLikedIndie);
+            localStorage.setItem('indie-likes', timesLikedIndie);
             console.log('likes' + timesLikedIndie);
-            var likeDisplayIndie = localStorage.getItem('likes', timesLikedIndie);
-            $('#like-indie-counter').text('You have like this band ' + likeDisplayIndie + ' times');
+            var likeDisplayIndie = localStorage.getItem('indie-likes', timesLikedIndie);
+            $('#like-indie-counter').text('You have liked this band ' + likeDisplayIndie + ' times');
         })
+        var likeDisplayIndie = localStorage.getItem('indie-likes', timesLikedIndie);
+        $('#like-indie-counter').text('You have liked this band ' + likeDisplayIndie + ' times').attr('style', 'color: white');
         // --------------update the Dom with Youtube after modal button 
         pullYoutube('WYdXnmDlcd0');
         pullMapbox();
@@ -192,11 +195,13 @@ $('#dance').click(function clearDOM() {
         $('#like-dance').click(function likeClick() {
             $('#like-dance').attr('src', 'assets/images/like btn after.png');
             timesLikedDance++;
-            localStorage.setItem('likes', timesLikedDance);
+            localStorage.setItem('dance-likes', timesLikedDance);
             console.log('likes' + timesLikedDance);
-            var likeDisplayDance = localStorage.getItem('likes', timesLikedDance);
-            $('#like-dance-counter').text('You have like this band ' + likeDisplayDance + ' times');
+            var likeDisplayDance = localStorage.getItem('dance-likes', timesLikedDance);
+            $('#like-dance-counter').text('You have liked this band ' + likeDisplayDance + ' times');
         })
+        var likeDisplayDance = localStorage.getItem('dance-likes', timesLikedDance);
+        $('#like-dance-counter').text('You have liked this band ' + likeDisplayDance + ' times').attr('style', 'color: white');
         // --------------update the Dom with Youtube after modal button 
         pullYoutube('7voMjZhK9BM');
         pullMapbox();
@@ -228,6 +233,8 @@ function pullYoutube(videoID) {
 
 //  function to insert map
 function pullMapbox() {
+
+    // insert mapbox into the dom on button click 
     $('#mapbox-container').append('<div id="sidebar"></div>', '<div class="map" id="map"></div>');
     $('#sidebar').append('<div class="heading"></div>', '<div id="listings" class="listings"></div>');
     $('.heading').append('<h1>Upcoming Shows</h1>');
@@ -303,7 +310,7 @@ function pullMapbox() {
                 },
                 "properties": {
                     "id": "3",
-                    "name": "Urban Hall",
+                    "name": "Urban Lounge",
                     "phoneFormatted": "(801) 746-0557",
                     "phone": "8017460557",
                     "address": "241 S 500 E",
